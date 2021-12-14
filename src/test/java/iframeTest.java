@@ -7,23 +7,30 @@ import org.testng.annotations.Test;
 
 import java.util.Set;
 
-public class NewWindowTest {
+public class iframeTest {
 
     @Test
     public void testNewWindow(){
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        driver.get("https://testeroprogramowania.github.io/selenium/basics.html");
-        String currentWindow = driver.getWindowHandle();
-        driver.findElement(By.id("newPage")).click();
-        Set<String> windowNames = driver.getWindowHandles();
-        for(String window : windowNames) {
-            if(!window.equals(currentWindow)){
-                driver.switchTo().window(window);
-            }
-        }
-        driver.findElement(By.name("q")).sendKeys("Selenium");
-        driver.switchTo().window(currentWindow);
-        driver.findElement(By.name("fname")).sendKeys("bartek");
+        driver.get("https://testeroprogramowania.github.io/selenium/iframe.html");
+        driver.switchTo().frame(0);
+          driver.findElement(By.id("fname")).sendKeys("bartel");
+        driver.switchTo().defaultContent();              // powrót do pierwotnego okna htmk
+        System.out.println(driver.findElement(By.tagName("h1")));
+
+    }
+
+    @Test
+    public void testNewWindowIframeII(){
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://testeroprogramowania.github.io/selenium/iframe.html");
+        WebElement iframe = driver.findElement(By.cssSelector("[src='basics.html']"));
+        driver.switchTo().frame(iframe);
+        driver.findElement(By.id("fname")).sendKeys("bartel");
+        driver.switchTo().defaultContent();              // powrót do pierwotnego okna htmk
+        System.out.println(driver.findElement(By.tagName("h1")));
+
     }
 }

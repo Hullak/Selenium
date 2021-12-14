@@ -1,22 +1,22 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
-public class ExceutorTest {
+import java.io.File;
+import java.io.IOException;
+
+public class UploadTest {
 
     @Test
-    public void executeJavascript(){
+    public void uploadFile() throws IOException {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        driver.get("https://testeroprogramowania.github.io/selenium/");
-        WebElement basicPageLink = driver.findElement(By.linkText("Podstawowa strona testowa"));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();",basicPageLink);
-        WebElement firstName = driver.findElement(By.name("fname"));
-        executor.executeScript("arguments[0].setAttribute('value','Bartek')",firstName);
+        driver.get("https://testeroprogramowania.github.io/selenium/fileupload.html");
+        driver.findElement(By.id("myFile")).sendKeys("C:\\Users\\konrad.kolodziej\\OneDrive - IPF Digital AS\\Documents\\plik.txt");
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+        File srcFile = screenshot.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(srcFile,new File("src/test/resources/scrn.jpg"));
     }
 }
