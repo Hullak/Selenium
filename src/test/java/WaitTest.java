@@ -46,9 +46,21 @@ public class WaitTest {
         fluentWait.withTimeout(Duration.ofSeconds(10));
         fluentWait.pollingEvery(Duration.ofSeconds(1));
 
-        fluentWait.until(new Function<WebDriver, Object>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
+//     klasa anonimowa   fluentWait.until(new Function<WebDriver, Object>() {
+//            @Override
+//            public Boolean apply(WebDriver driver) {
+//                List<WebElement> elements = driver.findElements(locator);
+//                if (elements.size() > 0) {
+//                    System.out.println("Element jest na stronie");
+//                    return true;
+//                } else {
+//                    System.out.println("Elemnetu nie ma na stronie");
+//                    return false;
+//                }
+//
+//            }
+//        });
+        fluentWait.until((driver) -> {
                 List<WebElement> elements = driver.findElements(locator);
                 if (elements.size() > 0) {
                     System.out.println("Element jest na stronie");
@@ -57,8 +69,6 @@ public class WaitTest {
                     System.out.println("Elemnetu nie ma na stronie");
                     return false;
                 }
-
-            }
         });
     }
 }

@@ -18,5 +18,6 @@ public class ExceutorTest {
         executor.executeScript("arguments[0].click();",basicPageLink);
         WebElement firstName = driver.findElement(By.name("fname"));
         executor.executeScript("arguments[0].setAttribute('value','Bartek')",firstName);
+        System.out.println();
     }
 }
